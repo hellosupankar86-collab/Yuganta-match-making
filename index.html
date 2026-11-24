@@ -1,0 +1,1321 @@
+```html
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6d1212">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="যুগান্ত শাস্ত্রী — যোটক বিচার">
+    <title>যুগান্ত শাস্ত্রী — যোটক বিচার ও জন্মছক বিশ্লেষণ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pad-font-size: 15px;
+        }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f3eee3;
+            color: #1f2937;
+        }
+        .font-serif-bn {
+            font-family: 'Noto Serif Bengali', serif;
+        }
+        .astro-sheet {
+            background: #fffdf7;
+            border: 2px solid #c99d3b;
+            box-shadow: 0 12px 35px rgba(82, 12, 12, 0.09);
+        }
+        .double-gold-border {
+            border: 3px double #b6862c;
+        }
+        .pad-dynamic-text {
+            font-size: var(--pad-font-size);
+            line-height: 1.75;
+        }
+        .editable-field {
+            outline: none;
+            border-bottom: 1px dashed transparent;
+            transition: border-color 0.2s, background-color 0.2s;
+            border-radius: 6px;
+            padding: 2px 8px;
+        }
+        .editable-field:hover {
+            border-bottom-color: #c99d3b;
+            background-color: rgba(251, 191, 36, 0.12);
+        }
+        .editable-field:focus {
+            border-bottom: 1.5px solid #741515;
+            background-color: rgba(251, 191, 36, 0.18);
+        }
+
+        /* East Indian (Bengali) 3x3 + Diagonal Corner Chart */
+        .ei-chart-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #fffaf0;
+            border: 2px solid #741515;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ei-chart-main {
+            max-width: 250px;
+            margin: 0 auto;
+        }
+        .ei-chart-navamsha {
+            max-width: 185px;
+            margin: 0 auto;
+        }
+        .ei-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .ei-house {
+            position: absolute;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1px;
+        }
+        .ei-house-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: #741515;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+        .ei-chart-navamsha .ei-house-label {
+            font-size: 7px;
+        }
+        .ei-house-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: #111827;
+            resize: none;
+            line-height: 1.15;
+            padding: 1px;
+        }
+        .ei-chart-navamsha .ei-house-input {
+            font-size: 8.5px;
+        }
+        .ei-house-input:focus {
+            background-color: rgba(251, 191, 36, 0.25);
+            border-radius: 3px;
+        }
+        .ei-center {
+            position: absolute;
+            left: 33.333%;
+            top: 33.333%;
+            width: 33.333%;
+            height: 33.333%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2px;
+            background: radial-gradient(circle, #fffdf7 0%, #faefd9 100%);
+        }
+
+        /* Print Mirror for Auto-Expanding Textareas */
+        .print-mirror {
+            display: none;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+            body {
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .astro-sheet {
+                box-shadow: none !important;
+                border: 2px solid #741515 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 8px 12px !important;
+            }
+            input, select {
+                border-color: transparent !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                appearance: none !important;
+                -webkit-appearance: none !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            .editable-field {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+            }
+            .auto-box {
+                display: none !important;
+            }
+            .print-mirror {
+                display: block !important;
+            }
+            .avoid-break {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .allow-break {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+            .next-page-a4 {
+                break-before: page;
+                page-break-before: always;
+                margin-top: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Sticky Control Toolbar -->
+    <header class="no-print sticky top-0 z-40 bg-gradient-to-r from-[#4d0b0b] via-[#741515] to-[#4d0b0b] text-amber-50 shadow-lg border-b border-amber-400/40">
+        <div class="max-w-6xl mx-auto px-3 sm:px-5 py-2.5 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-lg bg-amber-400/20 border border-amber-300/60 flex items-center justify-center text-amber-300 font-bold text-base">
+                    ✦
+                </span>
+                <div>
+                    <h1 class="font-serif-bn text-base sm:text-lg font-bold text-amber-100 leading-tight">
+                        যুগান্ত শাস্ত্রী — যোটক বিচার প্যাড
+                    </h1>
+                    <p class="text-[11px] text-amber-200/85">
+                        পূর্ব ভারতীয় জন্মছক, নবাংশ, দশা ও অষ্টকূট বিচার
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <!-- Font Size Controls (A- / A+) -->
+                <div class="flex items-center gap-1 bg-white/15 border border-amber-300/35 rounded-lg px-2 py-1 text-xs">
+                    <button type="button" onclick="changeFontSize(-1)" title="লেখার আকার ছোট করুন"
+                        class="px-1.5 py-0.5 rounded bg-amber-400/20 hover:bg-amber-400 hover:text-red-950 text-amber-100 font-bold cursor-pointer transition">
+                        A-
+                    </button>
+                    <span id="font_size_badge_top" class="px-1 font-bold text-amber-200 min-w-[36px] text-center">15px</span>
+                    <button type="button" onclick="changeFontSize(1)" title="লেখার আকার বড় করুন"
+                        class="px-1.5 py-0.5 rounded bg-amber-400/20 hover:bg-amber-400 hover:text-red-950 text-amber-100 font-bold cursor-pointer transition">
+                        A+
+                    </button>
+                </div>
+
+                <button type="button" onclick="fillDemoData()"
+                    class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-red-950 font-bold text-xs shadow cursor-pointer transition">
+                    নমুনা তথ্য
+                </button>
+                <button type="button" onclick="clearAllFields()"
+                    class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-amber-100 border border-amber-300/30 font-semibold text-xs cursor-pointer transition">
+                    মুছুন / রিসেট
+                </button>
+                <button type="button" onclick="toggleSettingsDrawer()"
+                    class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-amber-100 border border-amber-300/30 font-semibold text-xs cursor-pointer transition">
+                    ছবি ও সিগনেচার
+                </button>
+                <button type="button" onclick="prepareAndPrint()"
+                    class="px-3 sm:px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow cursor-pointer transition">
+                    প্রিন্ট / A4 PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Message Banner -->
+        <div id="status_banner" class="hidden bg-amber-100 text-red-950 border-t border-amber-300 px-4 py-1.5 text-xs font-semibold">
+            <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+                <span id="status_banner_text"></span>
+                <button type="button" onclick="hideBanner()" class="px-1.5 py-0.5 rounded bg-red-900/10 hover:bg-red-900/20 font-bold cursor-pointer">✕</button>
+            </div>
+        </div>
+
+        <!-- Branding & Font Size Drawer -->
+        <div id="settings_drawer" class="hidden bg-[#3a0808] border-t border-amber-400/30 px-3 sm:px-5 py-3.5 text-xs">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="bg-white/10 rounded-xl p-2.5 space-y-1.5">
+                    <label class="block font-bold text-amber-200">লোগো / জ্যোতিষীর ছবি</label>
+                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'logo')"
+                        class="w-full text-[11px] text-amber-100 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:bg-amber-400 file:text-red-950 file:font-bold cursor-pointer">
+                    <button type="button" onclick="removeImage('logo')" class="text-[11px] text-amber-300 underline cursor-pointer">ছবি মুছুন</button>
+                </div>
+
+                <div class="bg-white/10 rounded-xl p-2.5 space-y-1.5">
+                    <label class="block font-bold text-amber-200">স্বাক্ষর / সিগনেচার</label>
+                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'signature')"
+                        class="w-full text-[11px] text-amber-100 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:bg-amber-400 file:text-red-950 file:font-bold cursor-pointer">
+                    <button type="button" onclick="removeImage('signature')" class="text-[11px] text-amber-300 underline cursor-pointer">সিগনেচার মুছুন</button>
+                </div>
+
+                <div class="bg-white/10 rounded-xl p-2.5 space-y-1.5">
+                    <label for="font_size_slider" class="block font-bold text-amber-200">
+                        লেখার ফন্ট সাইজ: <span id="font_size_badge_drawer">15px</span>
+                    </label>
+                    <input type="range" id="font_size_slider" min="12" max="24" value="15" oninput="setFontSize(this.value)"
+                        class="w-full accent-amber-400 cursor-pointer">
+                    <p class="text-[11px] text-amber-200/80">বিশ্লেষণ, যোটক বিচার ও প্রতিকারের ফন্ট (12px–24px)</p>
+                </div>
+
+                <div class="bg-white/10 rounded-xl p-2.5 flex flex-col justify-between gap-2">
+                    <p class="text-[11px] text-amber-100">
+                        হেডার ও ফুটারের লেখা সরাসরি এডিট করলে স্বয়ংক্রিয়ভাবে ব্রাউজারে সেভ হয়ে থাকে।
+                    </p>
+                    <button type="button" onclick="saveBrandData(true)"
+                        class="w-full py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-red-950 font-bold cursor-pointer">
+                        সেটিংস সেভ করুন
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main A4 Report & Prescription Pad -->
+    <main class="flex-1 py-4 sm:py-6 px-2 sm:px-4">
+        <div id="report_sheet" class="astro-sheet max-w-6xl mx-auto rounded-2xl p-3.5 sm:p-6 md:p-8 space-y-5 allow-break">
+
+            <!-- 1. CLEAN FULL-WIDTH HEADER (NO RELIGIOUS INVOCATION, NO RIGHT CONTACT BLOCK) -->
+            <section class="double-gold-border rounded-xl p-4 sm:p-6 bg-gradient-to-b from-[#fff7e6] via-[#fffdf7] to-[#fffaf0] avoid-break">
+                <div class="flex flex-col items-center text-center space-y-2">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border-2 border-[#b6862c] bg-amber-50 overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
+                        <img id="brand_logo_img" src="" alt="যুগান্ত শাস্ত্রী" class="hidden w-full h-full object-cover">
+                        <div id="brand_logo_fallback" class="w-full h-full bg-gradient-to-br from-[#741515] to-[#4d0b0b] text-amber-200 flex flex-col items-center justify-center p-1">
+                            <span class="font-serif-bn text-2xl sm:text-3xl font-extrabold leading-none">যু</span>
+                            <span class="text-[9px] tracking-widest uppercase text-amber-300/90 mt-1">জ্যোতিষ</span>
+                        </div>
+                    </div>
+
+                    <h2 id="brand_name" contenteditable="true" spellcheck="false" oninput="saveBrandData(false)"
+                        class="editable-field font-serif-bn text-2xl sm:text-4xl md:text-[42px] font-extrabold text-[#6d1212] tracking-wide leading-snug w-full max-w-3xl break-words">
+                        যুগান্ত শাস্ত্রী
+                    </h2>
+
+                    <div class="h-0.5 w-36 bg-gradient-to-r from-transparent via-[#b6862c] to-transparent"></div>
+
+                    <p id="brand_title" contenteditable="true" spellcheck="false" oninput="saveBrandData(false)"
+                        class="editable-field text-xs sm:text-base font-bold text-amber-950 w-full max-w-3xl leading-relaxed">
+                        বৈদিক জ্যোতিষ, যোটক বিশারদ ও বাস্তু পরামর্শদাতা
+                    </p>
+
+                    <p id="brand_subline" contenteditable="true" spellcheck="false" oninput="saveBrandData(false)"
+                        class="editable-field text-xs sm:text-sm font-medium text-slate-700 w-full max-w-3xl">
+                        শাস্ত্রীয় কুষ্ঠি বিচার, বিবাহ যোটক ও প্রতিকার পরামর্শ প্যাড
+                    </p>
+
+                    <span class="no-print text-[11px] text-amber-800/80">
+                        (হেডার ও ফুটারের লেখার ওপর ক্লিক করে সরাসরি এডিট করা যাবে)
+                    </span>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-amber-300/80 flex flex-wrap items-center justify-between gap-2.5">
+                    <span class="px-3.5 py-1 rounded-full bg-[#741515] text-amber-100 text-xs font-bold tracking-wide">
+                        বিবাহ যোটক বিচার ও জন্মছক পর্যালোচনা পত্র
+                    </span>
+                    <div class="flex flex-wrap items-center gap-3 text-xs">
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-bold text-slate-700">ক্রমিক নং:</span>
+                            <input type="text" id="report_ref" placeholder="YS-JB-2026/01"
+                                class="w-32 px-2 py-0.5 rounded border border-amber-300 bg-white/80 font-semibold text-slate-900 outline-none">
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-bold text-[#6d1212]">বিচার তারিখ:</span>
+                            <input type="date" id="report_date"
+                                class="font-semibold text-slate-800 bg-transparent border-b border-amber-300 outline-none">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. GROOM & BRIDE BIRTH DETAILS + CHARTS (HOROSCOPE + SMALL NAVAMSHA + COMPACT DASHA COLUMN) -->
+            <section class="space-y-5 allow-break">
+
+                <!-- GROOM (পাত্রের বিবরণী, হরোস্কোপ, নবাংশ ও দশা) -->
+                <div class="border-2 border-[#741515]/85 rounded-xl p-3.5 sm:p-5 bg-[#fffcf4] space-y-4 avoid-break">
+                    <div class="flex items-center justify-between bg-[#741515] text-amber-100 px-3.5 py-1.5 rounded-lg">
+                        <h2 class="font-serif-bn text-base sm:text-lg font-bold">পাত্রের জন্মবিবরণী, জন্মছক, নবাংশ ও দশা</h2>
+                        <span class="text-xs font-semibold text-amber-300">বর পক্ষ</span>
+                    </div>
+
+                    <!-- Groom Birth Details -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs">
+                        <div class="sm:col-span-2">
+                            <label class="font-bold text-[#6d1212] block mb-0.5">পাত্রের নাম</label>
+                            <input type="text" id="groom_name" placeholder="পাত্রের পূর্ণ নাম"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-semibold text-sm outline-none focus:ring-1 focus:ring-red-800">
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">জন্ম তারিখ</label>
+                            <input type="text" id="groom_dob" placeholder="যেমন: ১৮/০৩/১৯৯৩"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">জন্ম সময়</label>
+                            <input type="text" id="groom_tob" placeholder="যেমন: সকাল ০৮:১৫"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="font-bold text-slate-700 block mb-0.5">জন্মস্থান</label>
+                            <input type="text" id="groom_pob" placeholder="যেমন: কলকাতা, পশ্চিমবঙ্গ"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                        <div>
+                            <label class="font-bold text-[#6d1212] block mb-0.5">লগ্ন</label>
+                            <select id="groom_lagna" onchange="updateChartBadge('groom')"
+                                class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none"></select>
+                        </div>
+                        <div>
+                            <label class="font-bold text-[#6d1212] block mb-0.5">রাশি</label>
+                            <select id="groom_rashi"
+                                class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none"></select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="font-bold text-[#6d1212] block mb-0.5">নক্ষত্র ও পাদ</label>
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <select id="groom_nakshatra" onchange="autoSuggestTara()"
+                                    class="col-span-2 w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none"></select>
+                                <select id="groom_pada"
+                                    class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none">
+                                    <option value="">পাদ</option>
+                                    <option value="১ম পাদ">১ম পাদ</option>
+                                    <option value="২য় পাদ">২য় পাদ</option>
+                                    <option value="৩য় পাদ">৩য় পাদ</option>
+                                    <option value="৪র্থ পাদ">৪র্থ পাদ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">গণ</label>
+                            <select id="groom_gana" class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none">
+                                <option value="">নির্বাচন করুন</option>
+                                <option value="দেবগণ">দেবগণ</option>
+                                <option value="নরগণ">নরগণ</option>
+                                <option value="রাক্ষসগণ">রাক্ষসগণ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">যোনি</label>
+                            <input type="text" id="groom_yoni" placeholder="যেমন: বানর"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Groom Side-by-Side: Main Horoscope + Small Navamsha + Compact Dasha Column -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-start pt-1">
+                        <!-- Main Horoscope Chart (5 cols) -->
+                        <div class="md:col-span-5 bg-amber-50/50 border border-amber-200 rounded-xl p-2.5 space-y-1.5">
+                            <div class="text-center text-xs font-bold text-[#6d1212]">পাত্রের জন্মছক (হরোস্কোপ)</div>
+                            <div id="groom_main_chart"></div>
+                        </div>
+
+                        <!-- Smaller Navamsha Chart (3 cols) -->
+                        <div class="md:col-span-3 bg-amber-50/50 border border-amber-200 rounded-xl p-2.5 space-y-1.5">
+                            <div class="text-center text-xs font-bold text-[#6d1212]">নবাংশ ছক</div>
+                            <div id="groom_nav_chart"></div>
+                        </div>
+
+                        <!-- Compact Dasha Column (4 cols) -->
+                        <div class="md:col-span-4 bg-amber-50/70 border border-amber-300 rounded-xl p-3 space-y-2 text-xs">
+                            <div class="font-bold text-[#6d1212] border-b border-amber-200 pb-1">
+                                দশা ও অন্তর্দশা (পাত্র)
+                            </div>
+                            <div>
+                                <label for="groom_dasha" class="font-bold text-slate-700 block mb-0.5">দশা</label>
+                                <input type="text" id="groom_dasha" placeholder="যেমন: শুক্র মহাদশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                            <div>
+                                <label for="groom_antardasha" class="font-bold text-slate-700 block mb-0.5">অন্তর্দশা</label>
+                                <input type="text" id="groom_antardasha" placeholder="যেমন: বুধ অন্তর্দশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                            <div>
+                                <label for="groom_next_dasha" class="font-bold text-slate-700 block mb-0.5">পরবর্তী দশা</label>
+                                <input type="text" id="groom_next_dasha" placeholder="যেমন: রবি মহাদশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                            <div>
+                                <label for="groom_next_antardasha" class="font-bold text-slate-700 block mb-0.5">পরবর্তী অন্তর্দশা</label>
+                                <input type="text" id="groom_next_antardasha" placeholder="যেমন: কেতু অন্তর্দশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BRIDE (পাত্রীর বিবরণী, হরোস্কোপ, নবাংশ ও দশা) -->
+                <div class="border-2 border-[#741515]/85 rounded-xl p-3.5 sm:p-5 bg-[#fffcf4] space-y-4 avoid-break">
+                    <div class="flex items-center justify-between bg-[#741515] text-amber-100 px-3.5 py-1.5 rounded-lg">
+                        <h2 class="font-serif-bn text-base sm:text-lg font-bold">পাত্রীর জন্মবিবরণী, জন্মছক, নবাংশ ও দশা</h2>
+                        <span class="text-xs font-semibold text-amber-300">কন্যা পক্ষ</span>
+                    </div>
+
+                    <!-- Bride Birth Details -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs">
+                        <div class="sm:col-span-2">
+                            <label class="font-bold text-[#6d1212] block mb-0.5">পাত্রীর নাম</label>
+                            <input type="text" id="bride_name" placeholder="পাত্রীর পূর্ণ নাম"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-semibold text-sm outline-none focus:ring-1 focus:ring-red-800">
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">জন্ম তারিখ</label>
+                            <input type="text" id="bride_dob" placeholder="যেমন: ২৫/১১/১৯৯৫"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">জন্ম সময়</label>
+                            <input type="text" id="bride_tob" placeholder="যেমন: সন্ধ্যা ০৬:৪০"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="font-bold text-slate-700 block mb-0.5">জন্মস্থান</label>
+                            <input type="text" id="bride_pob" placeholder="যেমন: বর্ধমান, পশ্চিমবঙ্গ"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                        <div>
+                            <label class="font-bold text-[#6d1212] block mb-0.5">লগ্ন</label>
+                            <select id="bride_lagna" onchange="updateChartBadge('bride')"
+                                class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none"></select>
+                        </div>
+                        <div>
+                            <label class="font-bold text-[#6d1212] block mb-0.5">রাশি</label>
+                            <select id="bride_rashi"
+                                class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none"></select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="font-bold text-[#6d1212] block mb-0.5">নক্ষত্র ও পাদ</label>
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <select id="bride_nakshatra" onchange="autoSuggestTara()"
+                                    class="col-span-2 w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none"></select>
+                                <select id="bride_pada"
+                                    class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none">
+                                    <option value="">পাদ</option>
+                                    <option value="১ম পাদ">১ম পাদ</option>
+                                    <option value="২য় পাদ">২য় পাদ</option>
+                                    <option value="৩য় পাদ">৩য় পাদ</option>
+                                    <option value="৪র্থ পাদ">৪র্থ পাদ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">গণ</label>
+                            <select id="bride_gana" class="w-full px-2 py-1.5 rounded border border-amber-300 bg-white font-semibold outline-none">
+                                <option value="">নির্বাচন করুন</option>
+                                <option value="দেবগণ">দেবগণ</option>
+                                <option value="নরগণ">নরগণ</option>
+                                <option value="রাক্ষসগণ">রাক্ষসগণ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-700 block mb-0.5">যোনি</label>
+                            <input type="text" id="bride_yoni" placeholder="যেমন: বানর"
+                                class="w-full px-2.5 py-1.5 rounded border border-amber-300 bg-white font-medium outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Bride Side-by-Side: Main Horoscope + Small Navamsha + Compact Dasha Column -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-start pt-1">
+                        <!-- Main Horoscope Chart (5 cols) -->
+                        <div class="md:col-span-5 bg-amber-50/50 border border-amber-200 rounded-xl p-2.5 space-y-1.5">
+                            <div class="text-center text-xs font-bold text-[#6d1212]">পাত্রীর জন্মছক (হরোস্কোপ)</div>
+                            <div id="bride_main_chart"></div>
+                        </div>
+
+                        <!-- Smaller Navamsha Chart (3 cols) -->
+                        <div class="md:col-span-3 bg-amber-50/50 border border-amber-200 rounded-xl p-2.5 space-y-1.5">
+                            <div class="text-center text-xs font-bold text-[#6d1212]">নবাংশ ছক</div>
+                            <div id="bride_nav_chart"></div>
+                        </div>
+
+                        <!-- Compact Dasha Column (4 cols) -->
+                        <div class="md:col-span-4 bg-amber-50/70 border border-amber-300 rounded-xl p-3 space-y-2 text-xs">
+                            <div class="font-bold text-[#6d1212] border-b border-amber-200 pb-1">
+                                দশা ও অন্তর্দশা (পাত্রী)
+                            </div>
+                            <div>
+                                <label for="bride_dasha" class="font-bold text-slate-700 block mb-0.5">দশা</label>
+                                <input type="text" id="bride_dasha" placeholder="যেমন: বৃহস্পতি মহাদশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                            <div>
+                                <label for="bride_antardasha" class="font-bold text-slate-700 block mb-0.5">অন্তর্দশা</label>
+                                <input type="text" id="bride_antardasha" placeholder="যেমন: শনি অন্তর্দশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                            <div>
+                                <label for="bride_next_dasha" class="font-bold text-slate-700 block mb-0.5">পরবর্তী দশা</label>
+                                <input type="text" id="bride_next_dasha" placeholder="যেমন: শনি মহাদশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                            <div>
+                                <label for="bride_next_antardasha" class="font-bold text-slate-700 block mb-0.5">পরবর্তী অন্তর্দশা</label>
+                                <input type="text" id="bride_next_antardasha" placeholder="যেমন: বুধ অন্তর্দশা"
+                                    class="w-full px-2 py-1 rounded border border-amber-300 bg-white font-semibold text-slate-900 outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. FULL 8-KOOTA ASHTAKOOTA TABLE (Flows naturally across multi-page A4 print) -->
+            <section class="allow-break border-2 border-[#b6862c] rounded-xl p-3.5 sm:p-5 bg-[#fffcf4] space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-300 pb-2 avoid-break">
+                    <div>
+                        <h2 class="font-serif-bn text-lg sm:text-xl font-bold text-[#6d1212]">
+                            যোটক বিচারের আটটি বিধান (অষ্টকূট মিলন সারণি — ৩৬ গুণ)
+                        </h2>
+                        <p class="no-print text-xs text-slate-600">
+                            আটটি কূটের প্রাপ্ত গুণ ও বিস্তারিত বিধান/মন্তব্য বসান (প্রিন্টে প্রয়োজন অনুযায়ী একাধিক পৃষ্ঠায় সুন্দরভাবে সাজবে)
+                        </p>
+                    </div>
+                    <div id="koota_verdict_badge"
+                        class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-amber-100 border border-amber-400 text-red-950 font-bold text-xs sm:text-sm">
+                        মোট ০/৩৬
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs sm:text-sm border-collapse border border-amber-300 bg-white">
+                        <thead>
+                            <tr class="bg-[#741515] text-amber-100">
+                                <th class="border border-amber-300 px-2.5 py-2 text-left w-36">বিধান / কূট</th>
+                                <th class="border border-amber-300 px-2.5 py-2 text-left">শাস্ত্রীয় বিবেচ্য বিষয়</th>
+                                <th class="border border-amber-300 px-2.5 py-2 text-center w-20">পূর্ণমান</th>
+                                <th class="border border-amber-300 px-2.5 py-2 text-center w-24">প্রাপ্ত গুণ</th>
+                                <th class="border border-amber-300 px-2.5 py-2 text-left">বিস্তারিত বিধান ও মন্তব্য</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ashtakoota_tbody"></tbody>
+                        <tfoot>
+                            <tr class="bg-amber-100/90 font-bold text-[#6d1212] avoid-break">
+                                <td class="border border-amber-300 px-2.5 py-2" colspan="2">
+                                    সর্বমোট অষ্টকূট প্রাপ্ত গুণ (৩৬ গুণের মধ্যে)
+                                </td>
+                                <td class="border border-amber-300 px-2.5 py-2 text-center">৩৬</td>
+                                <td class="border border-amber-300 px-2.5 py-2 text-center text-base sm:text-lg text-red-900">
+                                    <span id="total_koota_score">0</span> / 36
+                                </td>
+                                <td class="border border-amber-300 px-2.5 py-2 text-red-950">
+                                    মিলনের হার: <span id="total_koota_percent">0%</span> — <span id="koota_grade_text">বিচার্য</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 4. AUTO-ADJUSTING MANUAL WRITING BOXES (EXPAND & SHRINK WITH TEXT) -->
+            <div class="no-print flex flex-wrap items-center justify-between gap-2 bg-amber-100/90 border border-amber-300 rounded-xl px-3.5 py-2">
+                <span class="text-xs sm:text-sm font-bold text-[#6d1212]">
+                    বিশ্লেষণ, যোটক বিচার ও প্রতিকারের লেখার ফন্ট সাইজ:
+                </span>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="changeFontSize(-1)"
+                        class="px-3 py-1 rounded-lg bg-[#741515] hover:bg-[#5a0f0f] text-amber-100 text-xs font-bold cursor-pointer transition">
+                        A- ছোট করুন
+                    </button>
+                    <span id="font_size_badge_mid" class="px-2.5 py-1 rounded-md bg-white border border-amber-300 text-xs font-extrabold text-[#6d1212]">
+                        15px
+                    </span>
+                    <button type="button" onclick="changeFontSize(1)"
+                        class="px-3 py-1 rounded-lg bg-[#741515] hover:bg-[#5a0f0f] text-amber-100 text-xs font-bold cursor-pointer transition">
+                        A+ বড় করুন
+                    </button>
+                </div>
+            </div>
+
+            <!-- Box 1: পাত্রের জন্মছক বিশ্লেষণ -->
+            <section class="allow-break border-2 border-[#741515] rounded-xl p-4 sm:p-5 bg-[#fffdf9] space-y-2">
+                <div class="flex items-center justify-between bg-[#741515] text-amber-100 px-3.5 py-2 rounded-lg avoid-break">
+                    <h2 class="font-serif-bn text-base sm:text-lg font-bold">
+                        ১. পাত্রের জন্মছক বিশ্লেষণ
+                    </h2>
+                    <span class="text-xs text-amber-200">লগ্ন, রাশি, নবাংশ ও দশা পর্যালোচনা</span>
+                </div>
+                <textarea id="box_groom_analysis" rows="3"
+                    placeholder="পাত্রের জন্মছক, নবাংশ, দশা-অন্তর্দশা এবং গ্রহের অবস্থানের বিস্তারিত বিশ্লেষণ লিখুন..."
+                    class="auto-box pad-dynamic-text w-full p-3.5 rounded-xl border border-amber-300 bg-white text-slate-900 outline-none resize-none overflow-hidden focus:ring-2 focus:ring-red-800"></textarea>
+                <div id="mirror_box_groom_analysis" class="print-mirror pad-dynamic-text p-2 text-slate-900"></div>
+            </section>
+
+            <!-- Box 2: পাত্রীর জন্মছক বিশ্লেষণ -->
+            <section class="next-page-a4 allow-break border-2 border-[#741515] rounded-xl p-4 sm:p-5 bg-[#fffdf9] space-y-2">
+                <div class="flex items-center justify-between bg-[#741515] text-amber-100 px-3.5 py-2 rounded-lg avoid-break">
+                    <h2 class="font-serif-bn text-base sm:text-lg font-bold">
+                        ২. পাত্রীর জন্মছক বিশ্লেষণ
+                    </h2>
+                    <span class="text-xs text-amber-200">লগ্ন, রাশি, নবাংশ ও দশা পর্যালোচনা</span>
+                </div>
+                <textarea id="box_bride_analysis" rows="3"
+                    placeholder="পাত্রীর জন্মছক, নবাংশ, দশা-অন্তর্দশা এবং গ্রহের অবস্থানের বিস্তারিত বিশ্লেষণ লিখুন..."
+                    class="auto-box pad-dynamic-text w-full p-3.5 rounded-xl border border-amber-300 bg-white text-slate-900 outline-none resize-none overflow-hidden focus:ring-2 focus:ring-red-800"></textarea>
+                <div id="mirror_box_bride_analysis" class="print-mirror pad-dynamic-text p-2 text-slate-900"></div>
+            </section>
+
+            <!-- Box 3: জোটক বিচার -->
+            <section class="allow-break border-2 border-[#741515] rounded-xl p-4 sm:p-5 bg-[#fffdf9] space-y-2">
+                <div class="flex items-center justify-between bg-[#741515] text-amber-100 px-3.5 py-2 rounded-lg avoid-break">
+                    <h2 class="font-serif-bn text-base sm:text-lg font-bold">
+                        ৩. জোটক বিচার
+                    </h2>
+                    <span class="text-xs text-amber-200">অষ্টকূট মিলন ও সার্বিক যোটক সিদ্ধান্ত</span>
+                </div>
+                <textarea id="box_jotok_bichar" rows="3"
+                    placeholder="পাত্র ও পাত্রীর যোটক বিচার, অষ্টকূট মিলন ও বিবাহের সার্বিক সিদ্ধান্ত লিখুন..."
+                    class="auto-box pad-dynamic-text w-full p-3.5 rounded-xl border border-amber-300 bg-white text-slate-900 outline-none resize-none overflow-hidden focus:ring-2 focus:ring-red-800"></textarea>
+                <div id="mirror_box_jotok_bichar" class="print-mirror pad-dynamic-text p-2 text-slate-900"></div>
+            </section>
+
+            <!-- Box 4: প্রয়োজনীয় প্রতিকার ব্যবস্থা -->
+            <section class="allow-break border-2 border-[#741515] rounded-xl p-4 sm:p-5 bg-[#fffdf9] space-y-2">
+                <div class="flex items-center justify-between bg-[#741515] text-amber-100 px-3.5 py-2 rounded-lg avoid-break">
+                    <h2 class="font-serif-bn text-base sm:text-lg font-bold">
+                        ৪. প্রয়োজনীয় প্রতিকার ব্যবস্থা
+                    </h2>
+                    <span class="text-xs text-amber-200">শান্তি বিধান, রত্ন/মূল ও গৃহস্থ নির্দেশনা</span>
+                </div>
+                <textarea id="box_remedies" rows="3"
+                    placeholder="প্রয়োজনীয় প্রতিকার ব্যবস্থা, শান্তি স্বস্ত্যয়ন, রত্ন বা মূল ও পরামর্শ নোট লিখুন..."
+                    class="auto-box pad-dynamic-text w-full p-3.5 rounded-xl border border-amber-300 bg-white text-slate-900 outline-none resize-none overflow-hidden focus:ring-2 focus:ring-red-800"></textarea>
+                <div id="mirror_box_remedies" class="print-mirror pad-dynamic-text p-2 text-slate-900"></div>
+            </section>
+
+            <!-- 5. EDITABLE FOOTER & SIGNATURE -->
+            <section class="pt-3 border-t border-amber-300 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 avoid-break">
+                <div class="space-y-1.5 w-full sm:w-2/3">
+                    <div id="footer_line_1" contenteditable="true" spellcheck="false" oninput="saveBrandData(false)"
+                        class="editable-field text-xs sm:text-sm font-bold text-[#6d1212]">
+                        যুগান্ত শাস্ত্রী — বৈদিক জ্যোতিষ ও যোটক বিচার পরামর্শ কেন্দ্র
+                    </div>
+                    <div id="footer_line_2" contenteditable="true" spellcheck="false" oninput="saveBrandData(false)"
+                        class="editable-field text-[11px] sm:text-xs text-slate-600 italic">
+                        শাস্ত্রীয় গণনা ও পরামর্শ পরম করুণাময়ের ইচ্ছাধীন। শুভ কর্মে আশীর্বাদ ও সদাচার কাম্য।
+                    </div>
+                </div>
+
+                <div class="self-end text-center min-w-[190px] space-y-1">
+                    <div class="h-12 flex items-end justify-center">
+                        <img id="brand_sig_img" src="" alt="স্বাক্ষর" class="hidden max-h-12 object-contain">
+                        <span id="brand_sig_fallback" class="font-serif-bn italic text-base text-[#6d1212]/85">
+                            যুগান্ত শাস্ত্রী
+                        </span>
+                    </div>
+                    <div class="border-t border-[#741515] pt-1 text-xs font-bold text-[#6d1212]">
+                        যুগান্ত শাস্ত্রী — স্বাক্ষর ও সিলমোহর
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        const BRAND_KEY = 'yuganta_shastri_jotok_v3';
+
+        const RASHIS = [
+            'নির্বাচন করুন',
+            'মেষ', 'বৃষ', 'মিথুন', 'কর্কট', 'সিংহ', 'কন্যা',
+            'তুলা', 'বৃশ্চিক', 'ধনু', 'মকর', 'কুম্ভ', 'মীন'
+        ];
+
+        const NAKSHATRAS = [
+            'নির্বাচন করুন',
+            'অশ্বিনী', 'ভরণী', 'কৃত্তিকা', 'রোহিণী', 'মৃগশিরা', 'আর্দ্রা',
+            'পুনর্বসু', 'পুষ্যা', 'অশ্লেষা', 'মঘা', 'পূর্বফল্গুনী', 'উত্তরফল্গুনী',
+            'হস্তা', 'চিত্রা', 'স্বাতী', 'বিশাখা', 'অনুরাধা', 'জ্যেষ্ঠা',
+            'মূলা', 'পূর্বাষাঢ়া', 'উত্তরাষাঢ়া', 'শ্রবণা', 'ধনিষ্ঠা', 'শতভিষা',
+            'পূর্বভাদ্রপদ', 'উত্তরভাদ্রপদ', 'রেবতী'
+        ];
+
+        const EIGHT_KOOTAS = [
+            { id: 'varna',   name: '১. বর্ণ কূট',      desc: 'আধ্যাত্মিক ও কর্মগত সামঞ্জস্য', max: 1 },
+            { id: 'vashya',  name: '২. বশ্য কূট',      desc: 'পারস্পরিক আকর্ষণ ও প্রভাব', max: 2 },
+            { id: 'tara',    name: '৩. তারা কূট',      desc: 'নক্ষত্র গণনায় শুভত্ব ও আয়ু', max: 3 },
+            { id: 'yoni',    name: '৪. যোনি কূট',      desc: 'দাম্পত্য সুখ ও মানসিক প্রকৃতি', max: 4 },
+            { id: 'maitri',  name: '৫. গ্রহ মৈত্রী কূট', desc: 'রাশি অধিপতির বন্ধুত্ব ও সামঞ্জস্য', max: 5 },
+            { id: 'gana',    name: '৬. গণ কূট',       desc: 'দেব, নর বা রাক্ষস গণ বিচার', max: 6 },
+            { id: 'bhakoot', name: '৭. রাশি / ভকূট কূট', desc: 'রাশিগত সম্পর্ক ও আর্থিক স্থিতি', max: 7 },
+            { id: 'nadi',    name: '৮. নাড়ী কূট',     desc: 'আদি, মধ্য বা অন্ত্য নাড়ী বিচার', max: 8 }
+        ];
+
+        const EAST_INDIAN_12 = [
+            { num: 1,  label: '১ মেষ',    left: '34%', top: '2%',  width: '32%', height: '29%' },
+            { num: 2,  label: '২ বৃষ',    left: '8%',  top: '1%',  width: '25%', height: '15%' },
+            { num: 3,  label: '৩ মিথুন',  left: '1%',  top: '9%',  width: '16%', height: '23%' },
+            { num: 4,  label: '৪ কর্কট',  left: '2%',  top: '34%', width: '29%', height: '32%' },
+            { num: 5,  label: '৫ সিংহ',   left: '1%',  top: '68%', width: '16%', height: '23%' },
+            { num: 6,  label: '৬ কন্যা',  left: '8%',  top: '84%', width: '25%', height: '15%' },
+            { num: 7,  label: '৭ তুলা',   left: '34%', top: '69%', width: '32%', height: '29%' },
+            { num: 8,  label: '৮ বৃশ্চিক', left: '67%', top: '84%', width: '25%', height: '15%' },
+            { num: 9,  label: '৯ ধনু',    left: '83%', top: '68%', width: '16%', height: '23%' },
+            { num: 10, label: '১০ মকর',   left: '69%', top: '34%', width: '29%', height: '32%' },
+            { num: 11, label: '১১ কুম্ভ',  left: '83%', top: '9%',  width: '16%', height: '23%' },
+            { num: 12, label: '১২ মীন',   left: '67%', top: '1%',  width: '25%', height: '15%' }
+        ];
+
+        const AUTO_BOX_IDS = [
+            'box_groom_analysis',
+            'box_bride_analysis',
+            'box_jotok_bichar',
+            'box_remedies'
+        ];
+
+        // ==================== CHART & DROPDOWN BUILDERS ====================
+        function populateSelects() {
+            const lagnaIds = ['groom_lagna', 'bride_lagna'];
+            const rashiIds = ['groom_rashi', 'bride_rashi'];
+            const nakIds = ['groom_nakshatra', 'bride_nakshatra'];
+
+            lagnaIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.innerHTML = RASHIS.map((r, idx) =>
+                    `<option value="${idx === 0 ? '' : r}">${r}</option>`
+                ).join('');
+            });
+
+            rashiIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.innerHTML = RASHIS.map((r, idx) =>
+                    `<option value="${idx === 0 ? '' : r}">${r}</option>`
+                ).join('');
+            });
+
+            nakIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.innerHTML = NAKSHATRAS.map((n, idx) =>
+                    `<option value="${idx === 0 ? '' : n}">${n}</option>`
+                ).join('');
+            });
+        }
+
+        function buildEastIndianChart(targetContainerId, prefix, centerTitle, isCompact) {
+            const container = document.getElementById(targetContainerId);
+            if (!container) return;
+
+            const housesHtml = EAST_INDIAN_12.map(h => `
+                <div class="ei-house" style="left: ${h.left}; top: ${h.top}; width: ${h.width}; height: ${h.height};">
+                    <span class="ei-house-label">${h.label}</span>
+                    <textarea id="${prefix}_h_${h.num}" rows="2" placeholder="—" class="ei-house-input"></textarea>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="ei-chart-wrap ${isCompact ? 'ei-chart-navamsha' : 'ei-chart-main'}">
+                    <svg class="ei-svg" viewBox="0 0 300 300" preserveAspectRatio="none">
+                        <line x1="100" y1="0" x2="100" y2="300" stroke="#741515" stroke-width="1.6" />
+                        <line x1="200" y1="0" x2="200" y2="300" stroke="#741515" stroke-width="1.6" />
+                        <line x1="0" y1="100" x2="300" y2="100" stroke="#741515" stroke-width="1.6" />
+                        <line x1="0" y1="200" x2="300" y2="200" stroke="#741515" stroke-width="1.6" />
+                        <line x1="0" y1="0" x2="100" y2="100" stroke="#b6862c" stroke-width="1.4" />
+                        <line x1="300" y1="0" x2="200" y2="100" stroke="#b6862c" stroke-width="1.4" />
+                        <line x1="0" y1="300" x2="100" y2="200" stroke="#b6862c" stroke-width="1.4" />
+                        <line x1="300" y1="300" x2="200" y2="200" stroke="#b6862c" stroke-width="1.4" />
+                    </svg>
+                    ${housesHtml}
+                    <div class="ei-center">
+                        <div class="font-serif-bn text-[10px] sm:text-xs font-bold text-[#6d1212] leading-tight">${centerTitle}</div>
+                        <div id="${prefix}_badge" class="text-[9px] font-bold text-amber-900 mt-0.5">${isCompact ? 'নবাংশ' : 'রাশিচক্র'}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateChartBadge(person) {
+            const lagnaVal = document.getElementById(`${person}_lagna`)?.value || '';
+            const badge = document.getElementById(`${person}_main_badge`);
+            if (badge) {
+                badge.textContent = lagnaVal ? `${lagnaVal} লগ্ন` : 'রাশিচক্র';
+            }
+        }
+
+        // ==================== FULL 8-KOOTA TABLE ====================
+        function buildAshtakootaTable() {
+            const tbody = document.getElementById('ashtakoota_tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = EIGHT_KOOTAS.map(k => `
+                <tr class="avoid-break">
+                    <td class="border border-amber-300 px-2.5 py-2 font-bold text-[#6d1212]">${k.name}</td>
+                    <td class="border border-amber-300 px-2.5 py-2 text-slate-600">${k.desc}</td>
+                    <td class="border border-amber-300 px-2.5 py-2 text-center font-semibold">${k.max}</td>
+                    <td class="border border-amber-300 px-2 py-2 text-center">
+                        <input type="number" id="koota_val_${k.id}" min="0" max="${k.max}" step="0.5" value="0"
+                            oninput="recalculateKoota()"
+                            class="w-16 text-center font-bold text-slate-900 border border-amber-300 rounded px-1 py-0.5 bg-amber-50/70 outline-none focus:ring-1 focus:ring-red-800">
+                    </td>
+                    <td class="border border-amber-300 px-2.5 py-2">
+                        <input type="text" id="koota_remark_${k.id}" placeholder="বিধান ও মন্তব্য লিখুন..."
+                            class="w-full text-xs sm:text-sm text-slate-800 bg-transparent border-b border-transparent focus:border-amber-300 outline-none">
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function recalculateKoota() {
+            let total = 0;
+            EIGHT_KOOTAS.forEach(k => {
+                const el = document.getElementById(`koota_val_${k.id}`);
+                if (!el) return;
+                let v = parseFloat(el.value);
+                if (isNaN(v) || v < 0) v = 0;
+                if (v > k.max) {
+                    v = k.max;
+                    el.value = k.max;
+                }
+                total += v;
+            });
+
+            const rounded = Math.round(total * 10) / 10;
+            const pct = Math.round((rounded / 36) * 100);
+
+            document.getElementById('total_koota_score').textContent = rounded;
+            document.getElementById('total_koota_percent').textContent = `${pct}%`;
+
+            let verdict = 'অপেক্ষমাণ';
+            let badgeClass = 'bg-amber-100 border-amber-400 text-red-950';
+
+            if (rounded === 0) {
+                verdict = 'গুণ বসান';
+            } else if (rounded < 18) {
+                verdict = 'নিম্ন মিলন';
+                badgeClass = 'bg-rose-100 border-rose-400 text-rose-950';
+            } else if (rounded < 24) {
+                verdict = 'মধ্যম উত্তম মিলন';
+                badgeClass = 'bg-amber-100 border-amber-400 text-amber-950';
+            } else if (rounded < 30) {
+                verdict = 'উত্তম যোটক';
+                badgeClass = 'bg-emerald-100 border-emerald-400 text-emerald-950';
+            } else {
+                verdict = 'অতি উত্তম যোটক';
+                badgeClass = 'bg-emerald-200 border-emerald-500 text-emerald-950';
+            }
+
+            document.getElementById('koota_grade_text').textContent = verdict;
+            const badge = document.getElementById('koota_verdict_badge');
+            badge.textContent = `মোট ${rounded}/৩৬ (${verdict})`;
+            badge.className = `self-start sm:self-auto px-3.5 py-1 rounded-full border font-bold text-xs sm:text-sm ${badgeClass}`;
+        }
+
+        function autoSuggestTara() {
+            const gNak = document.getElementById('groom_nakshatra')?.value || '';
+            const bNak = document.getElementById('bride_nakshatra')?.value || '';
+            const gIdx = NAKSHATRAS.indexOf(gNak);
+            const bIdx = NAKSHATRAS.indexOf(bNak);
+            if (gIdx <= 0 || bIdx <= 0) return;
+
+            const diff = ((gIdx - bIdx + 27) % 27) + 1;
+            const rem = diff % 9;
+            const good = [1, 2, 4, 6, 8, 0].includes(rem);
+            const taraInput = document.getElementById('koota_val_tara');
+            const taraRemark = document.getElementById('koota_remark_tara');
+            if (taraInput && parseFloat(taraInput.value) === 0) {
+                taraInput.value = good ? 3 : 1.5;
+                if (taraRemark) taraRemark.value = good ? 'শুভ তারা মিলন' : 'মধ্যম তারা মিলন';
+                recalculateKoota();
+            }
+        }
+
+        // ==================== AUTO-ADJUSTING WRITING BOXES ====================
+        function resizeAutoBox(el) {
+            if (!el) return;
+            el.style.height = 'auto';
+            const minPx = 92;
+            el.style.height = `${Math.max(minPx, el.scrollHeight)}px`;
+        }
+
+        function resizeAllAutoBoxes() {
+            document.querySelectorAll('textarea.auto-box').forEach(el => resizeAutoBox(el));
+        }
+
+        function syncMirror(id) {
+            const ta = document.getElementById(id);
+            const mirror = document.getElementById(`mirror_${id}`);
+            if (ta && mirror) {
+                mirror.textContent = ta.value;
+            }
+        }
+
+        function syncAllMirrors() {
+            AUTO_BOX_IDS.forEach(id => syncMirror(id));
+        }
+
+        function initAutoBoxes() {
+            AUTO_BOX_IDS.forEach(id => {
+                const ta = document.getElementById(id);
+                if (!ta) return;
+                ta.addEventListener('input', () => {
+                    resizeAutoBox(ta);
+                    syncMirror(id);
+                });
+            });
+            window.addEventListener('resize', resizeAllAutoBoxes);
+        }
+
+        // ==================== FONT SIZE & BRANDING ====================
+        function toggleSettingsDrawer() {
+            const drawer = document.getElementById('settings_drawer');
+            if (drawer) drawer.classList.toggle('hidden');
+        }
+
+        function changeFontSize(delta) {
+            const current = parseInt(document.getElementById('font_size_slider')?.value || '15', 10);
+            const next = Math.min(24, Math.max(12, current + delta));
+            const slider = document.getElementById('font_size_slider');
+            if (slider) slider.value = next;
+            setFontSize(next);
+        }
+
+        function setFontSize(val) {
+            const size = Math.min(24, Math.max(12, parseInt(val, 10) || 15));
+            const px = `${size}px`;
+            document.documentElement.style.setProperty('--pad-font-size', px);
+            ['font_size_badge_top', 'font_size_badge_drawer', 'font_size_badge_mid'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = px;
+            });
+            resizeAllAutoBoxes();
+            saveBrandData(false);
+        }
+
+        function handleImageUpload(event, kind) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                const dataUrl = reader.result;
+                renderImages(kind === 'logo' ? dataUrl : null, kind === 'signature' ? dataUrl : null);
+                try {
+                    const data = JSON.parse(localStorage.getItem(BRAND_KEY) || '{}');
+                    if (kind === 'logo') data.logoData = dataUrl;
+                    if (kind === 'signature') data.sigData = dataUrl;
+                    localStorage.setItem(BRAND_KEY, JSON.stringify(data));
+                    showBanner(kind === 'logo' ? 'ছবি / লোগো সংরক্ষিত হয়েছে।' : 'স্বাক্ষর সংরক্ষিত হয়েছে।');
+                } catch (err) {
+                    showBanner('ছবিটি বড় হওয়ায় স্থায়ী সেভ হয়নি, তবে বর্তমান প্রিন্টে দেখা যাবে।');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(kind) {
+            try {
+                const data = JSON.parse(localStorage.getItem(BRAND_KEY) || '{}');
+                if (kind === 'logo') {
+                    delete data.logoData;
+                    document.getElementById('brand_logo_img').classList.add('hidden');
+                    document.getElementById('brand_logo_fallback').classList.remove('hidden');
+                }
+                if (kind === 'signature') {
+                    delete data.sigData;
+                    document.getElementById('brand_sig_img').classList.add('hidden');
+                    document.getElementById('brand_sig_fallback').classList.remove('hidden');
+                }
+                localStorage.setItem(BRAND_KEY, JSON.stringify(data));
+                showBanner('ছবি মুছে ফেলা হয়েছে।');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderImages(logoData, sigData) {
+            if (logoData) {
+                const img = document.getElementById('brand_logo_img');
+                const fb = document.getElementById('brand_logo_fallback');
+                img.src = logoData;
+                img.classList.remove('hidden');
+                fb.classList.add('hidden');
+            }
+            if (sigData) {
+                const img = document.getElementById('brand_sig_img');
+                const fb = document.getElementById('brand_sig_fallback');
+                img.src = sigData;
+                img.classList.remove('hidden');
+                fb.classList.add('hidden');
+            }
+        }
+
+        function saveBrandData(notify) {
+            try {
+                const existing = JSON.parse(localStorage.getItem(BRAND_KEY) || '{}');
+                existing.name = document.getElementById('brand_name').innerText.trim();
+                existing.title = document.getElementById('brand_title').innerText.trim();
+                existing.subline = document.getElementById('brand_subline').innerText.trim();
+                existing.footer1 = document.getElementById('footer_line_1').innerText.trim();
+                existing.footer2 = document.getElementById('footer_line_2').innerText.trim();
+                existing.fontSize = document.getElementById('font_size_slider').value;
+                localStorage.setItem(BRAND_KEY, JSON.stringify(existing));
+                if (notify) showBanner('প্যাড ও ব্র্যান্ডিং সেটিংস সেভ করা হয়েছে।');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function loadBrandData() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(BRAND_KEY) || '{}');
+                if (saved.name) document.getElementById('brand_name').innerText = saved.name;
+                if (saved.title) document.getElementById('brand_title').innerText = saved.title;
+                if (saved.subline) document.getElementById('brand_subline').innerText = saved.subline;
+                if (saved.footer1) document.getElementById('footer_line_1').innerText = saved.footer1;
+                if (saved.footer2) document.getElementById('footer_line_2').innerText = saved.footer2;
+                if (saved.fontSize) {
+                    document.getElementById('font_size_slider').value = saved.fontSize;
+                    setFontSize(saved.fontSize);
+                } else {
+                    setFontSize(15);
+                }
+                renderImages(saved.logoData, saved.sigData);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // ==================== DEMO & CLEAR ====================
+        function fillDemoData() {
+            document.getElementById('report_ref').value = 'YS-JB-2026/101';
+
+            document.getElementById('groom_name').value = 'সৌম্যদীপ মুখার্জী';
+            document.getElementById('groom_dob').value = '১৮/০৩/১৯৯৩';
+            document.getElementById('groom_tob').value = 'সকাল ০৮:১৫';
+            document.getElementById('groom_pob').value = 'কলকাতা, পশ্চিমবঙ্গ';
+            document.getElementById('groom_lagna').value = 'মেষ';
+            document.getElementById('groom_rashi').value = 'মকর';
+            document.getElementById('groom_nakshatra').value = 'শ্রবণা';
+            document.getElementById('groom_pada').value = '২য় পাদ';
+            document.getElementById('groom_gana').value = 'দেবগণ';
+            document.getElementById('groom_yoni').value = 'বানর';
+            updateChartBadge('groom');
+
+            const gMain = { 1: 'লগ্ন, কেতু', 3: 'মঙ্গল', 6: 'বৃহঃ', 7: 'রাহু', 10: 'চন্দ্র, শনি', 11: 'রবি, বুধ', 12: 'শুক্র' };
+            const gNav = { 2: 'লগ্ন, রবি', 4: 'চন্দ্র', 7: 'শুক্র, বৃহঃ', 9: 'মঙ্গল', 11: 'শনি, বুধ' };
+            for (let i = 1; i <= 12; i++) {
+                const mEl = document.getElementById(`groom_main_h_${i}`);
+                const nEl = document.getElementById(`groom_nav_h_${i}`);
+                if (mEl) mEl.value = gMain[i] || '';
+                if (nEl) nEl.value = gNav[i] || '';
+            }
+
+            document.getElementById('groom_dasha').value = 'শুক্র মহাদশা';
+            document.getElementById('groom_antardasha').value = 'বুধ অন্তর্দশা';
+            document.getElementById('groom_next_dasha').value = 'রবি মহাদশা';
+            document.getElementById('groom_next_antardasha').value = 'কেতু অন্তর্দশা';
+
+            document.getElementById('bride_name').value = 'অনন্যা ভট্টাচার্য';
+            document.getElementById('bride_dob').value = '২৫/১১/১৯৯৫';
+            document.getElementById('bride_tob').value = 'সন্ধ্যা ০৬:৪০';
+            document.getElementById('bride_pob').value = 'বর্ধমান, পশ্চিমবঙ্গ';
+            document.getElementById('bride_lagna').value = 'বৃষ';
+            document.getElementById('bride_rashi').value = 'ধনু';
+            document.getElementById('bride_nakshatra').value = 'পূর্বাষাঢ়া';
+            document.getElementById('bride_pada').value = '১ম পাদ';
+            document.getElementById('bride_gana').value = 'নরগণ';
+            document.getElementById('bride_yoni').value = 'বানর';
+            updateChartBadge('bride');
+
+            const bMain = { 2: 'লগ্ন', 6: 'রাহু', 8: 'রবি, বুধ, মঙ্গল', 9: 'চন্দ্র, শুক্র, বৃহঃ', 11: 'শনি', 12: 'কেতু' };
+            const bNav = { 1: 'বৃহঃ, চন্দ্র', 5: 'লগ্ন', 8: 'শুক্র', 10: 'মঙ্গল, রবি', 12: 'শনি' };
+            for (let i = 1; i <= 12; i++) {
+                const mEl = document.getElementById(`bride_main_h_${i}`);
+                const nEl = document.getElementById(`bride_nav_h_${i}`);
+                if (mEl) mEl.value = bMain[i] || '';
+                if (nEl) nEl.value = bNav[i] || '';
+            }
+
+            document.getElementById('bride_dasha').value = 'বৃহস্পতি মহাদশা';
+            document.getElementById('bride_antardasha').value = 'শনি অন্তর্দশা';
+            document.getElementById('bride_next_dasha').value = 'শনি মহাদশা';
+            document.getElementById('bride_next_antardasha').value = 'বুধ অন্তর্দশা';
+
+            const scores = {
+                varna:   { v: 1,   r: 'বর্ণ সামঞ্জস্য অনুকূল' },
+                vashya:  { v: 1,   r: 'মধ্যম বশ্য সামঞ্জস্য' },
+                tara:    { v: 3,   r: 'শুভ তারা যোগ' },
+                yoni:    { v: 4,   r: 'একই যোনি — শুভ' },
+                maitri:  { v: 0.5, r: 'দশা ও গ্রহ সমন্বয় বিচার্য' },
+                gana:    { v: 5,   r: 'দেব-নর গণ সামঞ্জস্য' },
+                bhakoot: { v: 5,   r: 'ভকূট মিলন অনুকূল' },
+                nadi:    { v: 8,   r: 'ভিন্ন নাড়ী — শুভ' }
+            };
+            Object.keys(scores).forEach(k => {
+                const vEl = document.getElementById(`koota_val_${k}`);
+                const rEl = document.getElementById(`koota_remark_${k}`);
+                if (vEl) vEl.value = scores[k].v;
+                if (rEl) rEl.value = scores[k].r;
+            });
+            recalculateKoota();
+
+            document.getElementById('box_groom_analysis').value =
+                'পাত্রের জন্মছকে মেষ লগ্ন ও মকর রাশি (শ্রবণা নক্ষত্র, ২য় পাদ)। নবাংশ ছক ও বর্তমান শুক্র মহাদশা / বুধ অন্তর্দশার পাশাপাশি পরবর্তী রবি মহাদশা ও কেতু অন্তর্দশার প্রভাব পর্যালোচনা করে কর্ম ও দাম্পত্য স্থিতি বিচার্য।';
+
+            document.getElementById('box_bride_analysis').value =
+                'পাত্রীর জন্মছকে বৃষ লগ্ন ও ধনু রাশি (পূর্বাষাঢ়া নক্ষত্র, ১ম পাদ)। নবাংশ ছক ও বর্তমান বৃহস্পতি মহাদশা / শনি অন্তর্দশা এবং পরবর্তী শনি মহাদশা ও বুধ অন্তর্দশার প্রভাব বিশ্লেষণে পারিবারিক ভারসাম্য ও শুভ যোগ দৃশ্যমান।';
+
+            document.getElementById('box_jotok_bichar').value =
+                'অষ্টকূট মিলনে ২৭.৫/৩৬ গুণ প্রাপ্ত হয়েছে। পাত্র ও পাত্রীর জন্মছক, নবাংশ ছক এবং চলমান ও পরবর্তী দশা-অন্তর্দশার সমন্বয়ে যোটক বিচার সামগ্রিকভাবে শুভ ও অনুকূল।';
+
+            document.getElementById('box_remedies').value =
+                'বিবাহের পূর্বে শান্তি স্বস্ত্যয়ন, গ্রহশান্তি এবং নির্ধারিত রত্ন বা মূল ধারণের নিয়ম ও শাস্ত্রীয় নির্দেশনা এখানে লিপিবদ্ধ করুন।';
+
+            resizeAllAutoBoxes();
+            syncAllMirrors();
+            showBanner('নমুনা তথ্য লোড করা হয়েছে।');
+        }
+
+        function clearAllFields() {
+            [
+                'report_ref', 'groom_name', 'groom_dob', 'groom_tob', 'groom_pob', 'groom_yoni',
+                'groom_dasha', 'groom_antardasha', 'groom_next_dasha', 'groom_next_antardasha',
+                'bride_name', 'bride_dob', 'bride_tob', 'bride_pob', 'bride_yoni',
+                'bride_dasha', 'bride_antardasha', 'bride_next_dasha', 'bride_next_antardasha'
+            ].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            [
+                'groom_lagna', 'groom_rashi', 'groom_nakshatra', 'groom_pada', 'groom_gana',
+                'bride_lagna', 'bride_rashi', 'bride_nakshatra', 'bride_pada', 'bride_gana'
+            ].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.selectedIndex = 0;
+            });
+
+            updateChartBadge('groom');
+            updateChartBadge('bride');
+
+            for (let i = 1; i <= 12; i++) {
+                ['groom_main_h_', 'groom_nav_h_', 'bride_main_h_', 'bride_nav_h_'].forEach(prefix => {
+                    const el = document.getElementById(`${prefix}${i}`);
+                    if (el) el.value = '';
+                });
+            }
+
+            EIGHT_KOOTAS.forEach(k => {
+                const vEl = document.getElementById(`koota_val_${k.id}`);
+                const rEl = document.getElementById(`koota_remark_${k.id}`);
+                if (vEl) vEl.value = 0;
+                if (rEl) rEl.value = '';
+            });
+
+            AUTO_BOX_IDS.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            recalculateKoota();
+            resizeAllAutoBoxes();
+            syncAllMirrors();
+            showBanner('সব তথ্য পরিষ্কার করা হয়েছে।');
+        }
+
+        function prepareAndPrint() {
+            resizeAllAutoBoxes();
+            syncAllMirrors();
+            window.print();
+        }
+
+        function showBanner(msg) {
+            const b = document.getElementById('status_banner');
+            const t = document.getElementById('status_banner_text');
+            if (b && t) {
+                t.textContent = msg;
+                b.classList.remove('hidden');
+            }
+        }
+
+        function hideBanner() {
+            const b = document.getElementById('status_banner');
+            if (b) b.classList.add('hidden');
+        }
+
+        function initPWA() {
+            try {
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="36" fill="#741515"/><text x="96" y="92" text-anchor="middle" font-size="48" fill="#fde68a" font-family="serif">যু</text><text x="96" y="138" text-anchor="middle" font-size="22" font-weight="bold" fill="#fffbeb" font-family="sans-serif">যুগান্ত শাস্ত্রী</text></svg>`;
+                const iconUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+                const manifest = {
+                    name: 'যুগান্ত শাস্ত্রী — যোটক বিচার ও জন্মছক বিশ্লেষণ',
+                    short_name: 'যুগান্ত শাস্ত্রী',
+                    start_url: './',
+                    display: 'standalone',
+                    background_color: '#fffdf7',
+                    theme_color: '#741515',
+                    icons: [
+                        { src: iconUrl, sizes: '192x192', type: 'image/svg+xml' },
+                        { src: iconUrl, sizes: '512x512', type: 'image/svg+xml' }
+                    ]
+                };
+                const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+                const link = document.createElement('link');
+                link.rel = 'manifest';
+                link.href = URL.createObjectURL(blob);
+                document.head.appendChild(link);
+
+                if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+                    const sw = `
+                        const CACHE_NAME = 'yuganta-jotok-pwa-v1';
+                        self.addEventListener('install', e => { self.skipWaiting(); });
+                        self.addEventListener('activate', e => { e.waitUntil(self.clients.claim()); });
+                        self.addEventListener('fetch', e => {
+                            if (e.request.method !== 'GET') return;
+                            e.respondWith(caches.match(e.request).then(c => c || fetch(e.request).catch(() => c)));
+                        });
+                    `;
+                    navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw], { type: 'application/javascript' }))).catch(() => {});
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initPWA();
+            populateSelects();
+
+            buildEastIndianChart('groom_main_chart', 'groom_main', 'পাত্রের ছক', false);
+            buildEastIndianChart('groom_nav_chart', 'groom_nav', 'নবাংশ', true);
+            buildEastIndianChart('bride_main_chart', 'bride_main', 'পাত্রীর ছক', false);
+            buildEastIndianChart('bride_nav_chart', 'bride_nav', 'নবাংশ', true);
+
+            buildAshtakootaTable();
+            initAutoBoxes();
+
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            document.getElementById('report_date').value = dateStr;
+
+            loadBrandData();
+            fillDemoData();
+        });
+    </script>
+</body>
+</html>
+```
